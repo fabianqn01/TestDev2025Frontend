@@ -1,0 +1,27 @@
+<nav class="navbar">
+    <div class="navbar-container">
+      <!-- Logo que redirige al home -->
+      <div class="logo" (click)="navigateToHome()">
+        <img src="src/assets/navbar/home.png" alt="Home" class="logo-img" />
+      </div>
+  
+      <!-- Menú del usuario -->
+      <div class="user-section" *ngIf="user$ | async as user; else loggedOut">
+        <div class="user-name" (click)="toggleDropdown()">
+          <span>{{ user.name }}</span>
+          <span class="dropdown-arrow">&#9660;</span>
+        </div>
+  
+        <!-- Menú desplegable -->
+        <div *ngIf="dropdownOpen" class="dropdown-menu">
+          <button (click)="logout()">Cerrar sesión</button>
+        </div>
+      </div>
+  
+      <!-- Si el usuario no está logueado, mostramos el botón de login -->
+      <ng-template #loggedOut>
+        <button (click)="navigateToLogin()" class="btn btn-primary">Iniciar sesión</button>
+      </ng-template>
+    </div>
+  </nav>
+  
