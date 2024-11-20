@@ -20,7 +20,9 @@ export class AuthEffects {
         this.authService.login(credentials).pipe(
           map(response => {
             this.router.navigate(['/home']);
-            return AuthActions.loginSuccess({ response });
+            // Almacena los roles en el estado al hacer login
+            console.log(response.data);
+            return AuthActions.loginSuccess({ response});
           }),
           catchError(error => 
             of(AuthActions.loginFailure({ error: error.message }))
@@ -29,4 +31,4 @@ export class AuthEffects {
       )
     )
   );
-}
+}  

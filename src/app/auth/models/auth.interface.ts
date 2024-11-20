@@ -1,11 +1,12 @@
 import { User } from "./user.interface";
 
 export interface AuthState {
-    user: User | null;
-    token: string | null;
-    loading: boolean;
-    error: string | null;
-  }
+  user: User | null;
+  token: string | null;
+  loading: boolean;
+  error: string | null;
+  roles: string[];  // Nuevo campo para los roles
+}
   
   export interface LoginCredentials {
     email: string;
@@ -13,6 +14,8 @@ export interface AuthState {
   }
   
   export interface LoginResponse {
-    user: User;
-    token: string;
+    data: {
+      user: User;
+      token: string;
+    };
   }
