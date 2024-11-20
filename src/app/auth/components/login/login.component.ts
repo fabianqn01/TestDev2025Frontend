@@ -15,17 +15,17 @@ import { selectError, selectLoading } from '../../store/auth.selectors';
 export class LoginComponent {
   private readonly store = inject(Store);
 
-  username: string = '';
+  email: string = '';
   password: string = '';
   
   loading$ = this.store.select(selectLoading);
   error$ = this.store.select(selectError);
 
   login() {
-    if (this.username && this.password) {
+    if (this.email && this.password) {
       this.store.dispatch(AuthActions.login({
         credentials: {
-          username: this.username,
+          email: this.email,
           password: this.password
         }
       }));
