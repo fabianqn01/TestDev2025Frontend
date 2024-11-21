@@ -82,7 +82,7 @@ export class EntityListComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Confirmar Eliminación',
-        message: `¿Estás seguro de eliminar la entidad "${entity.name}"? Tambien se eliminaran todos elos empleados relacionados a esta entidad.`
+        message: `¿Estás seguro de eliminar la entidad "${entity.name}"? Se eliminarán todos los empleados relacionados a esta entidad.`
       }
     });
 

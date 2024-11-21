@@ -52,7 +52,13 @@ export class EntityEffects {
       ofType(EntityActions.updateEntity),
       switchMap(({ id, entity }) => 
         this.entityService.update(id, entity).pipe(
-          map(updatedEntity => EntityActions.updateEntitySuccess({ entity: updatedEntity })),
+          map(updatedEntity => {
+           // Primero, despachar la acción de éxito de creación
+           this.store.dispatch(EntityActions.updateEntitySuccess({ entity: updatedEntity }));
+           // Después de crear, cargar nuevamente las entidades
+           this.store.dispatch(EntityActions.loadEntities());
+           return EntityActions.updateEntitySuccess({ entity: updatedEntity })
+          }),
           catchError(error => 
             of(EntityActions.updateEntityFailure({ error: error.message }))
           )

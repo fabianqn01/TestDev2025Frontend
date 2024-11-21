@@ -68,8 +68,13 @@ export class EmployeeEffects {
       switchMap(({ id, employee }) =>
         this.employeeService.update(id, employee).pipe(
           map((updatedEmployee) =>
-            EmployeeActions.updateEmployeeSuccess({ employee: updatedEmployee })
-          ),
+          {
+            // Primero, despachar la acción de éxito de creación
+            this.store.dispatch(EmployeeActions.updateEmployeeSuccess({ employee: updatedEmployee }));
+            // Después de crear, cargar nuevamente los empleados
+            this.store.dispatch(EmployeeActions.loadEmployees());
+            return EmployeeActions.updateEmployeeSuccess({ employee: updatedEmployee })
+          }),
           catchError((error) =>
             of(EmployeeActions.updateEmployeeFailure({ error: error.message }))
           )
