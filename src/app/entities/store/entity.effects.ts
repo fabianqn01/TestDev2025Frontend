@@ -4,11 +4,13 @@ import { EntityService } from '../services/entity.service';
 import { EntityActions } from './entity.actions';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class EntityEffects {
   private actions$ = inject(Actions);
   private entityService = inject(EntityService);
+  private readonly store = inject(Store);
 
   loadEntities$ = createEffect(() => 
     this.actions$.pipe(
@@ -29,7 +31,13 @@ export class EntityEffects {
       ofType(EntityActions.createEntity),
       switchMap(({ entity }) => 
         this.entityService.create(entity).pipe(
-          map(createdEntity => EntityActions.createEntitySuccess({ entity: createdEntity })),
+          map(createdEntity => {
+            // Primero, despachar la acción de éxito de creación
+            this.store.dispatch(EntityActions.createEntitySuccess({ entity: createdEntity }));
+            // Después de crear, cargar nuevamente las entidades
+            this.store.dispatch(EntityActions.loadEntities());
+            return EntityActions.createEntitySuccess({ entity: createdEntity });
+          }),
           catchError(error => 
             of(EntityActions.createEntityFailure({ error: error.message }))
           )
@@ -37,6 +45,7 @@ export class EntityEffects {
       )
     )
   );
+  
 
   updateEntity$ = createEffect(() => 
     this.actions$.pipe(

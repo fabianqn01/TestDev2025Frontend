@@ -5,11 +5,13 @@ import { EmployeeService } from '../services/employee.service';
 import { EmployeeActions } from './employee.actions';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class EmployeeEffects {
   private actions$ = inject(Actions);
   private employeeService = inject(EmployeeService);
+  private readonly store = inject(Store);
 
   loadEmployees$ = createEffect(() =>
     this.actions$.pipe(
@@ -44,9 +46,13 @@ export class EmployeeEffects {
       ofType(EmployeeActions.createEmployee),
       switchMap(({ employee }) =>
         this.employeeService.create(employee).pipe(
-          map((createdEmployee) =>
-            EmployeeActions.createEmployeeSuccess({ employee: createdEmployee })
-          ),
+          map((createdEmployee) => {
+            // Primero, despachar la acción de éxito de creación
+            this.store.dispatch(EmployeeActions.createEmployeeSuccess({ employee: createdEmployee }));
+            // Después de crear, cargar nuevamente los empleados
+            this.store.dispatch(EmployeeActions.loadEmployees());
+            return EmployeeActions.createEmployeeSuccess({ employee: createdEmployee });
+          }),
           catchError((error) =>
             of(EmployeeActions.createEmployeeFailure({ error: error.message }))
           )
@@ -54,6 +60,7 @@ export class EmployeeEffects {
       )
     )
   );
+  
 
   updateEmployee$ = createEffect(() =>
     this.actions$.pipe(

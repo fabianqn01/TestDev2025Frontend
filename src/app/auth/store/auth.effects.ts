@@ -21,7 +21,6 @@ export class AuthEffects {
           map(response => {
             this.router.navigate(['/home']);
             // Almacena los roles en el estado al hacer login
-            console.log(response.data);
             return AuthActions.loginSuccess({ response});
           }),
           catchError(error => 

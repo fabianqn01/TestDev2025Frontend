@@ -67,8 +67,7 @@ export class EmployeeFormComponent implements OnInit {
 
       // Verifica si el token está disponible antes de hacer el dispatch
       this.store.select(selectToken).subscribe(token => {
-        console.log('Token en el componente:', token);  // Verifica que el token esté aquí
-
+        
         if (this.data.mode === 'create') {
           this.store.dispatch(EmployeeActions.createEmployee({ employee: employeeData }));
           this.store.dispatch(EmployeeActions.loadEmployees());

@@ -9,12 +9,10 @@ import { take, switchMap } from 'rxjs/operators';
 export function authInterceptorFn(req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
   const store = inject(Store);  // Usar `inject` para obtener el Store
 
-  console.log('Interceptor ejecutado');
   
   return store.select(selectToken).pipe(
     take(1),
     switchMap(token => {
-      console.log('Token desde store:', token);
       if (token) {
         const authRequest = req.clone({
           setHeaders: { Authorization: `Bearer ${token}` }
