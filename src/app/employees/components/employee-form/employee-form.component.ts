@@ -36,7 +36,7 @@ export class EmployeeFormComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store,
     private dialogRef: MatDialogRef<EmployeeFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { mode: 'create' | 'edit', employee?: Employee }
+    @Inject(MAT_DIALOG_DATA) public data: { mode: 'create' | 'edit' | 'view', employee?: Employee }
   ) {
     this.employeeForm = this.fb.group({
       name: ['', Validators.required],
@@ -50,7 +50,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.data.mode === 'edit' && this.data.employee) {
+    if ((this.data.mode === 'edit' || this.data.mode === 'view') && this.data.employee) {
       this.employeeForm.patchValue({
         ...this.data.employee,
         entityId: this.data.employee.entityId  // Poner el id de la entidad seleccionada
@@ -88,4 +88,5 @@ export class EmployeeFormComponent implements OnInit {
   onCancel(): void {
     this.dialogRef.close(false);
   }
+  
 }

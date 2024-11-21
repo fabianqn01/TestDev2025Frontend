@@ -1,12 +1,14 @@
 <h2 mat-dialog-title>
-  {{ data.mode === 'create' ? 'Crear Nuevo Empleado' : 'Editar Empleado' }}
+  {{ data.mode === 'create' ? 'Crear Nuevo Empleado' : 
+  data.mode === 'edit' ? 'Editar Empleado' :
+  'Detalles de Empleado' }}
 </h2>
 
 <mat-dialog-content>
   <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>Nombre</mat-label>
-      <input matInput formControlName="name" required>
+      <input matInput formControlName="name" required [readonly]="data.mode === 'view'">
       <mat-error *ngIf="employeeForm.get('name')?.invalid">
         El nombre es requerido
       </mat-error>
@@ -14,17 +16,19 @@
 
     <mat-form-field>
       <mat-label>Posición</mat-label>
-      <input matInput formControlName="position">
+      <input matInput formControlName="position" [readonly]="data.mode === 'view'">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Salario</mat-label>
-      <input matInput type="number" formControlName="salary">
+      <input matInput type="number" formControlName="salary" [readonly]="data.mode === 'view'">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Entidad</mat-label>
-      <mat-select formControlName="entityId">
+      <mat-select formControlName="entityId" 
+      [disabled]="data.mode === 'view'"
+      [ngClass]="{'readonly-select': data.mode === 'view'}">
         <mat-option *ngFor="let entity of entities$ | async" [value]="entity.id">
           {{ entity.name }}
         </mat-option>
@@ -37,6 +41,7 @@
     <div mat-dialog-actions>
       <button mat-button (click)="onCancel()">Cancelar</button>
       <button 
+        *ngIf="data.mode !== 'view'"
         mat-raised-button 
         color="primary" 
         type="submit" 

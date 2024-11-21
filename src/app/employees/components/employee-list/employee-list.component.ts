@@ -70,6 +70,13 @@ export class EmployeeListComponent implements OnInit {
     });
   }
 
+  openViewDialog(employee: Employee): void {
+    const dialogRef = this.dialog.open(EmployeeFormComponent, {
+      width: '500px',
+      data: { mode: 'view', employee } as { mode: 'create' | 'edit' | 'view', employee?: Employee }
+    });
+  }
+
   confirmDelete(employee: Employee): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {

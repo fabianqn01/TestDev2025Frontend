@@ -71,6 +71,13 @@ export class EntityListComponent implements OnInit {
     });
   }
 
+  openViewDialog(entity: Entity): void {
+    const dialogRef = this.dialog.open(EntityFormComponent, {
+      width: '500px',
+      data: { mode: 'view', entity } as { mode: 'create' | 'edit' | 'view', entity?: Entity }
+    });
+  }
+
   confirmDelete(entity: Entity): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {

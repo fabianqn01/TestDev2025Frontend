@@ -22,44 +22,8 @@ import { selectToken } from '../../../auth/store/auth.selectors';
     MatInputModule,
     MatButtonModule
   ],
-  template: `
-    <h2 mat-dialog-title>
-      {{ data.mode === 'create' ? 'Crear Nueva Entidad' : 'Editar Entidad' }}
-    </h2>
-    <mat-dialog-content>
-      <form [formGroup]="entityForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-          <mat-label>Nombre</mat-label>
-          <input matInput formControlName="name" required>
-          <mat-error *ngIf="entityForm.get('name')?.invalid">
-            El nombre es requerido
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Descripción</mat-label>
-          <input matInput formControlName="description">
-        </mat-form-field>
-
-        <div mat-dialog-actions>
-          <button mat-button (click)="onCancel()">Cancelar</button>
-          <button 
-            mat-raised-button 
-            color="primary" 
-            type="submit" 
-            [disabled]="entityForm.invalid">
-            {{ data.mode === 'create' ? 'Crear' : 'Actualizar' }}
-          </button>
-        </div>
-      </form>
-    </mat-dialog-content>
-  `,
-  styles: [`
-    mat-form-field {
-      width: 100%;
-      margin-bottom: 16px;
-    }
-  `]
+  templateUrl: './entity-form.component.html',
+  styleUrls: ['./entity-form.component.css']
 })
 export class EntityFormComponent implements OnInit {
   entityForm: FormGroup;
@@ -68,7 +32,7 @@ export class EntityFormComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store,
     private dialogRef: MatDialogRef<EntityFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { mode: 'create' | 'edit', entity?: Entity }
+    @Inject(MAT_DIALOG_DATA) public data: { mode: 'create' | 'edit' | 'view', entity?: Entity }
   ) {
     this.entityForm = this.fb.group({
       name: ['', Validators.required],
@@ -77,7 +41,7 @@ export class EntityFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.data.mode === 'edit' && this.data.entity) {
+    if ((this.data.mode === 'edit' || this.data.mode === 'view') && this.data.entity) {
       this.entityForm.patchValue(this.data.entity);
     }
   }

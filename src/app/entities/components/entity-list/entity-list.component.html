@@ -39,6 +39,12 @@
         <th mat-header-cell *matHeaderCellDef>Acciones</th>
         <td mat-cell *matCellDef="let row">
           <button 
+            mat-icon-button 
+            color="primary"
+            (click)="openViewDialog(row)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button 
             *ngIf="(roles$ | async)?.includes('Admin')"
             mat-icon-button 
             color="primary"
