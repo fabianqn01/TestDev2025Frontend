@@ -5,8 +5,14 @@
       Home  
       <!-- <img src="src/assets/navbar/home.png" alt="Home" class="logo-img" /> -->
     </div>
+    
     <div class="entities">
       <button (click)="navigateToEntities()">Entidades</button>
+    </div>
+    
+    <!-- Agregar el enlace para empleados -->
+    <div class="employees">
+      <button (click)="navigateToEmployees()">Empleados</button>
     </div>
 
     <!-- Menú del usuario -->
@@ -18,7 +24,6 @@
 
       <!-- Botón para abrir el módulo de Entidades -->
       <div *ngIf="dropdownOpen" class="dropdown-menu">
-        
         <button (click)="logout()">Cerrar sesión</button>
       </div>
     </div>

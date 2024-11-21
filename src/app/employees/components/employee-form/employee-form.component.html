@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>
+  {{ data.mode === 'create' ? 'Crear Nuevo Empleado' : 'Editar Empleado' }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="employeeForm.get('name')?.invalid">
+        El nombre es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Posición</mat-label>
+      <input matInput formControlName="position">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Salario</mat-label>
+      <input matInput type="number" formControlName="salary">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Entidad</mat-label>
+      <mat-select formControlName="entityId">
+        <mat-option *ngFor="let entity of entities$ | async" [value]="entity.id">
+          {{ entity.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="employeeForm.get('entityId')?.invalid">
+        La entidad es requerida
+      </mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancelar</button>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        [disabled]="employeeForm.invalid">
+        {{ data.mode === 'create' ? 'Crear' : 'Actualizar' }}
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

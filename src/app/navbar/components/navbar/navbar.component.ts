@@ -38,4 +38,8 @@ export class NavbarComponent {
   navigateToEntities() {
     this.router.navigate(['/entities']); // Asegúrate de que esta ruta exista
   }
+
+  navigateToEmployees() {
+    this.router.navigate(['/employees']); // Navega a la página de empleados
+  }
 }

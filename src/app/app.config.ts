@@ -12,6 +12,8 @@ import { EntityEffects } from './entities/store/entity.effects';
 import { entityReducer } from './entities/store/entity.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
 import { authInterceptorFn } from './core';
+import { EmployeeEffects } from './employees/store/employee.effects';  // Asegúrate de importar los efectos de empleados
+import { employeeReducer } from './employees/store/employee.reducer';  // Asegúrate de importar el reducer de empleados
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,9 +22,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideStore({
       auth: authReducer,
-      entities: entityReducer
+      entities: entityReducer,
+      employees: employeeReducer  // Asegúrate de agregar el reducer de empleados
     }),
-    provideEffects([AuthEffects, EntityEffects]),
+    provideEffects([AuthEffects, EntityEffects, EmployeeEffects]),  // Incluye los efectos de empleados
     provideStoreDevtools({
       maxAge: 25,
       logOnly: false
