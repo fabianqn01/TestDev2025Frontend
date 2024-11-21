@@ -14,7 +14,7 @@ import { selectError, selectLoading, selectRoles} from '../../store/auth.selecto
 })
 export class LoginComponent {
   private readonly store = inject(Store);
-
+  
   email: string = '';
   password: string = '';
   

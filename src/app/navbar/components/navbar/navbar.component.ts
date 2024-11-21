@@ -34,4 +34,8 @@ export class NavbarComponent {
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;  // Alterna el estado del menú desplegable
   }
+
+  navigateToEntities() {
+    this.router.navigate(['/entities']); // Asegúrate de que esta ruta exista
+  }
 }
