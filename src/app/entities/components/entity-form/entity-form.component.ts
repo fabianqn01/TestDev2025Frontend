@@ -92,11 +92,13 @@ export class EntityFormComponent implements OnInit {
   
         if (this.data.mode === 'create') {
           this.store.dispatch(EntityActions.createEntity({ entity: entityData }));
+          this.store.dispatch(EntityActions.loadEntities());
         } else {
           this.store.dispatch(EntityActions.updateEntity({ 
             id: this.data.entity!.id, 
             entity: entityData 
           }));
+          this.store.dispatch(EntityActions.loadEntities());
         }
   
         this.dialogRef.close(true);
