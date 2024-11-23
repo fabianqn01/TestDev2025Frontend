@@ -15,6 +15,7 @@ Antes de ejecutar la aplicación, asegúrate de tener instalados los siguientes 
    Si no lo tienes, instala Angular CLI globalmente:  
    ```bash
    npm install -g @angular/cli
+3. ng s para ejecutarlo y se ejecutará en http://localhost:4200/
 
 
 
