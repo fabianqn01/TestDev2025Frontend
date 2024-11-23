@@ -1,3 +1,23 @@
+# 🚀 Proyecto Angular 18  
+
+Este proyecto es una aplicación web desarrollada con **Angular 18**. A continuación, se detallan los pasos necesarios para configurar y ejecutar el proyecto en tu entorno local.
+
+---
+
+## 📋 Requisitos previos  
+
+Antes de ejecutar la aplicación, asegúrate de tener instalados los siguientes componentes:
+
+1. **Node.js** (versión 16 o superior)  
+   [Descargar Node.js](https://nodejs.org/)  
+
+2. **Angular CLI** (versión compatible con Angular 18)  
+   Si no lo tienes, instala Angular CLI globalmente:  
+   ```bash
+   npm install -g @angular/cli
+
+
+
 # TestDev2025Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
